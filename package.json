@@ -1,0 +1,36 @@
+{
+  "name": "moonbeam-orbiter",
+  "version": "0.0.1",
+  "description": "This SubQuery project can be use as a starting point for Moonbeam alpha network",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/subql build",
+    "prepack": "rm -rf dist && npm build",
+    "start:docker": "docker-compose pull && docker-compose up --remove-orphans",
+    "codegen": "./node_modules/.bin/subql codegen"
+  },
+  "homepage": "https://github.com/subquery/moonbeam-alpha-subql-starter",
+  "repository": "github:subquery/moonbeam-alpha-subql-starter",
+  "files": [
+    "dist",
+    "schema.graphql",
+    "project.yaml"
+  ],
+  "author": "PureStake",
+  "license": "MIT",
+  "resolutions": {
+    "@polkadot/api": "^7.12.1",
+    "@polkadot/types": "^7.12.1",
+    "@polkadot/util": "^8.5.1"
+  },
+  "devDependencies": {
+    "@polkadot/api": "^7.15.1",
+    "@subql/cli": "latest",
+    "@subql/types": "latest",
+    "moonbeam-types-bundle": "^2.0.4",
+    "typescript": "^4.6.2"
+  },
+  "exports": {
+    "chaintypes": "src/chaintypes.ts"
+  }
+}
