@@ -1,7 +1,5 @@
 import {SubstrateBlock} from "@subql/types";
 import {Block} from "../types";
-import {Balance} from "@polkadot/types/interfaces";
-
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
     // Create a new Block with ID using block hash
@@ -21,7 +19,9 @@ export async function handleBlock(block: SubstrateBlock): Promise<void> {
     // Count extrinsics
     record.transactions = block.block.extrinsics.length;
     // Get real author
-    block.block.header.digest.logs.forEach(async log => {
+    // block.block.header.digest.logs.forEach(async log => {
+    for (let i = 0; i < block.block.header.digest.logs.length; i++) { 
+        let log = block.block.header.digest.logs[i]
         if (log.isPreRuntime)
             if (log.asPreRuntime[0].toString() == "nmbs") {
                 const authorNmbs = log.asPreRuntime[1].toString();
@@ -29,24 +29,21 @@ export async function handleBlock(block: SubstrateBlock): Promise<void> {
                 if (realAuthor != authorInfo)
                     record.realAuthor = realAuthor
             }
-        });
+    };
     await record.save();
 }
 
 
 function mapExtrinsics(extrinsics, records) {
-    return extrinsics.map((extrinsic, index) => {
-        let dispatchError;
+    return extrinsics.map((index) => {
         let dispatchInfo;
 
-        const events = records
-        .filter(({ phase }) => phase.isApplyExtrinsic && phase.asApplyExtrinsic.eq(index))
+        records.filter(({ phase }) => phase.isApplyExtrinsic && phase.asApplyExtrinsic.eq(index))
         .map(({ event }) => {
             if (event.section === "system") {
             if (event.method === "ExtrinsicSuccess") {
                 dispatchInfo = event.data[0];
             } else if (event.method === "ExtrinsicFailed") {
-                dispatchError = event.data[0];
                 dispatchInfo = event.data[1];
             }
             }
@@ -54,6 +51,6 @@ function mapExtrinsics(extrinsics, records) {
             return event;
         });
 
-        return { dispatchError, dispatchInfo, events, extrinsic };
+        return { dispatchInfo };
     });
 }
