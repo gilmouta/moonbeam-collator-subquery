@@ -18,9 +18,18 @@ export async function handleBlock(block: SubstrateBlock): Promise<void> {
     }, BigInt(0));
     //logger.info("weight: " + blockWeight);
     record.weight = blockWeight;
-    //record.weight = BigInt(0);
     // Count extrinsics
     record.transactions = block.block.extrinsics.length;
+    // Get real author
+    block.block.header.digest.logs.forEach(async log => {
+        if (log.isPreRuntime)
+            if (log.asPreRuntime[0].toString() == "nmbs") {
+                const authorNmbs = log.asPreRuntime[1].toString();
+                const realAuthor = (await api.query.authorMapping.mappingWithDeposit(authorNmbs)).toJSON()["account"];
+                if (realAuthor != authorInfo)
+                    record.realAuthor = realAuthor
+            }
+        });
     await record.save();
 }
 

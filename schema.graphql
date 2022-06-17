@@ -4,5 +4,5 @@ type Block @entity {
   author: String!
   transactions: Int!
   weight: BigInt!
-  orbiterParent: String
+  realAuthor: String
 }
