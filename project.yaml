@@ -1,6 +1,13 @@
-specVersion: 0.2.0
+specVersion: 1.0.0
 name: moonbeam-orbiter
 version: 0.0.1
+runner:
+  node:
+    name: '@subql/node'
+    version: 1.2.1
+  query:
+    name: '@subql/query'
+    version: 1.2.0
 description: >-
   This SubQuery project can be use as a starting point for Moonbeam alpha
   network
@@ -8,9 +15,9 @@ repository: 'https://github.com/subquery/moonbeam-alpha-subql-starter'
 schema:
   file: ./schema.graphql
 network:
+  chainId: '0x91bc6e169807aaa54802737e1c504b2577d4fafedd5a02c10293b1cd60e39527'
   endpoint: 'wss://moonbeam-alpha.api.onfinality.io/public-ws'
-  genesisHash: '0x91bc6e169807aaa54802737e1c504b2577d4fafedd5a02c10293b1cd60e39527'
-  dictionary: 'https://sz.api.subquery.network/sq/subquery/moonbase-alpha-dictionary'
+  dictionary: 'https://api.subquery.network/sq/subquery/moonbeam-dictionary'
   chaintypes:
     file: ./dist/chaintypes.js
 dataSources:
