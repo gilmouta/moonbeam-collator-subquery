@@ -25,7 +25,7 @@
     "ipfs-unixfs": "6.0.6"
   },
   "devDependencies": {
-    "@polkadot/api": "^7.15.1",
+    "@polkadot/api": "^8.9.1",
     "@subql/cli": "latest",
     "@subql/types": "latest",
     "moonbeam-types-bundle": "^2.0.4",

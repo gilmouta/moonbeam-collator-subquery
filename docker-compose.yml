@@ -27,6 +27,7 @@ services:
       DB_DATABASE: postgres
       DB_HOST: postgres
       DB_PORT: 5432
+      NODE_OPTIONS: "--max-old-space-size=8192"
     volumes:
       - ./:/app
     command:
